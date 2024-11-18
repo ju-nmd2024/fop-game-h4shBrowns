@@ -55,24 +55,31 @@ function spaceship(x, y, boostrFiring) {
 
 function draw() {
 
+  // Draws a black background
   background('black');
 
+  // Draws the surface
   fill('grey');
   rect(0, 490, 800, 400);
 
+  // Applies gravity to the spaceship velocity
   velocityY += gravity;
 
+  // Applies the velocity to the spaceship
   spaceshipY += velocityY;
   
+  // Prevents the spaceship from going through the surface
   if (spaceshipY > 440) {
     spaceshipY = 440;
     velocityY = 0; 
   }
 
+  //Changes the velocity of spaceship if boosters are fired
   let boostrFiring = keyIsDown(32); //Looks if player press spacebar
   if (boostrFiring) {
     velocityY += boostrThrust;
   }
 
+  //Draws the spaceship with the given parameters
   spaceship(spaceshipX, spaceshipY, boostrFiring);
 }
