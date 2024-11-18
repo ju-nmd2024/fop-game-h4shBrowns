@@ -2,8 +2,8 @@
 let spaceshipX = 400;
 let spaceshipY = 150;
 let velocityY = 0;
-const gravity = 0.1;
-const boostThrust = -3;
+const gravity = 0.3;
+const boostrThrust = -3;
 
 // Setups and creates the canvas width / height
 function setup() {
@@ -11,7 +11,7 @@ function setup() {
 }
 
 // Function takes x and y positions and draws character "spaceship" on called coordinates
-function spaceship(x, y, boostThrusting) {
+function spaceship(x, y, boostrFiring) {
   
   // Spaceship body
   stroke(150, 150, 150);
@@ -41,10 +41,11 @@ function spaceship(x, y, boostThrusting) {
   line(x, y + 5, x + 8, y - 5);
   circle(x, y - 15, 10, 10);
 
-  if (boostThrusting) {
+  //Creates a flame if player is firing boosters
+  if (boostrFiring) {
     noStroke();
     fill(255, 100, 0);
-    ellipse(x, y + 90, 30, 50);
+    ellipse(x, y + 80, 30, 50);
     fill(255, 200, 0);
     ellipse(x, y + 90, 15, 30);
   }
@@ -68,5 +69,10 @@ function draw() {
     velocityY = 0; 
   }
 
-  spaceship(spaceshipX, spaceshipY, boostThrust);
+  let boostrFiring = keyIsDown(32); //Looks if player press spacebar
+  if (boostrFiring) {
+    velocityY += boostrThrust;
+  }
+
+  spaceship(spaceshipX, spaceshipY, boostrFiring);
 }
