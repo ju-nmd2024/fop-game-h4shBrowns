@@ -1,10 +1,17 @@
+// Initial position and gravity + booster for spaceship
+let spaceshipX = 400;
+let spaceshipY = 400;
+let velocity = 0;
+const gravity = 0.1;
+const bosstThrush = -3;
+
 // Setups and creates the canvas width / height
 function setup() {
   createCanvas(800, 600);
 }
 
-// Takes x and y positions and draws character "spaceship" on given coordinates
-function spaceship(x, y) {
+// Takes x and y positions and draws character "spaceship" on called coordinates
+function spaceship(x, y, thrust) {
   stroke(150, 150, 150);
   fill(0, 255, 100);
   ellipse(x, y, 100, 150);
@@ -33,6 +40,6 @@ function spaceship(x, y) {
 function draw() {
   background('black');
   fill('grey');
-  rect(0, 450, 800, 600);
-  spaceship(400, 250);
+  rect(0, 490, 800, 400);
+  spaceship(400, 150);
 }
