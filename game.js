@@ -131,7 +131,7 @@ function draw() {
     spaceship(spaceshipX, spaceshipY, boostrFiring);
 
     if (spaceshipY >= 440) {
-      if (velocityY > 6) {
+      if (velocityY > 4) {
         explosion(spaceshipX, spaceshipY);
         console.log("Too fast on approach! Press ENTER to restart.");
         endMessage = "Too fast on approach! Press ENTER to restart";
