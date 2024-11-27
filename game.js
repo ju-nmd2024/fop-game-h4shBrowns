@@ -5,6 +5,11 @@ let velocityY = 0;
 const gravity = 0.3;
 const boostrThrust = -3;
 
+// Game states
+
+let gameState = "start";
+let endMessage = "";
+
 // Setups and creates the canvas width / height
 function setup() {
   createCanvas(800, 600);
@@ -87,51 +92,89 @@ function explosion(x, y) {
 }
 
 function draw() {
-  // Draws a black background
   background("black");
 
-  // Draws the surface
-  fill("grey");
-  rect(0, 490, 800, 400);
+  if (gameState === "start") {
+    // Start screen
+    fill("white");
+    textSize(30);
+    textAlign(CENTER, CENTER);
+    text("Press SPACE to start", width / 2, height / 2);
+    spaceship(spaceshipX, spaceshipY, false);
+  } else if (gameState === "playing") {
+    fill("grey");
+    rect(0, 490, 800, 400);
 
-  // Applies gravity to the spaceship velocity
-  velocityY += gravity;
+    // Draws the surface
+    fill("grey");
+    rect(0, 490, 800, 400);
 
-  // Applies the velocity to the spaceship
-  spaceshipY += velocityY;
+    // Applies gravity to the spaceship velocity
+    velocityY += gravity;
 
-  //Changes the velocity of spaceship if boosters are fired
-  let boostrFiring = keyIsDown(32); //Looks if player press spacebar
-  if (boostrFiring) {
-    velocityY += boostrThrust;
-  }
+    // Applies the velocity to the spaceship
+    spaceshipY += velocityY;
 
-  // Prevents the spaceship from going through the surface
-  if (spaceshipY >= 450) {
-    spaceshipY = 450;
-    velocityY = 0;
-  }
+    //Changes the velocity of spaceship if boosters are fired
+    let boostrFiring = keyIsDown(32); //Looks if player press spacebar
+    if (boostrFiring) {
+      velocityY += boostrThrust;
+    }
 
-  //Draws the spaceship with the given parameters
-  spaceship(spaceshipX, spaceshipY, boostrFiring);
+    // Prevents the spaceship from going through the surface
+    if (spaceshipY >= 450) {
+      spaceshipY = 450;
+      velocityY = 0;
+    }
 
-  if (spaceshipY >= 440) {
-    if (velocityY > 6) {
-      explosion(spaceshipX, spaceshipY);
-      console.log("Too fast on approach! Press ENTER to restart.");
-      noLoop();
+    //Draws the spaceship with the given parameters
+    spaceship(spaceshipX, spaceshipY, boostrFiring);
+
+    if (spaceshipY >= 440) {
+      if (velocityY > 6) {
+        explosion(spaceshipX, spaceshipY);
+        console.log("Too fast on approach! Press ENTER to restart.");
+        endMessage = "Too fast on approach! Press ENTER to restart";
+        crash = true;
+        gameState = "end";
+      } else {
+        console.log("Safe landing! Press ENTER to restart.");
+        endMessage = "Safe landing! Press ENTER to restart";
+        crash = false;
+        gameState = "end";
+      }
+    }
+  } else if (gameState === "end") {
+    fill("white");
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    text(endMessage, width / 2, height / 2);
+
+    // Draw the spaceship on the end screen
+    if (crash) {
+      // Draw spaceship with explosion if crashed
+      // Draws the surface
+      fill("grey");
+      rect(0, 490, 800, 400);
+      spaceship(spaceshipX, 450, false); // Draw spaceship on surface
+      explosion(spaceshipX, 450); // Show explosion
     } else {
-      console.log("Safe landing! Press ENTER to restart.");
-      noLoop();
+      // Draw spaceship safely landed if not crashed
+      // Draws the surface
+      fill("grey");
+      rect(0, 490, 800, 400);
+      spaceship(spaceshipX, 450, false); // Draw spaceship on surface
     }
   }
 }
 
 function keyPressed() {
-  if (keyCode === ENTER) {
+  if (gameState === "start" && key === " ") {
+    gameState = "playing";
+  } else if (gameState === "end" && keyCode === ENTER) {
     spaceshipX = 400;
     spaceshipY = 150;
     velocityY = 0;
-    loop(0);
+    gameState = "start";
   }
 }
