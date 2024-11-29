@@ -2,7 +2,7 @@
 let spaceshipX = 400;
 let spaceshipY = 150;
 let velocityY = 0;
-const gravity = 0.3;
+const gravity = 0.5;
 const boostrThrust = -3;
 
 // Game states
