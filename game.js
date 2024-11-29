@@ -25,7 +25,7 @@ function spaceship(x, y, boostrFiring) {
   //Spaceship window
   fill(255, 255, 255);
   stroke(0, 0, 0);
-  circle(x, y - 20, 50, 50);
+  circle(x, y - 20, 50);
 
   //Spaceship legs
   stroke(150, 150, 150);
@@ -43,7 +43,7 @@ function spaceship(x, y, boostrFiring) {
   line(x, y + 5, x, y - 10);
   line(x, y + 5, x - 8, y - 5);
   line(x, y + 5, x + 8, y - 5);
-  circle(x, y - 15, 10, 10);
+  circle(x, y - 15, 10);
 
   //Creates a flame if player is firing boosters
   if (boostrFiring) {
@@ -121,12 +121,6 @@ function draw() {
       velocityY += boostrThrust;
     }
 
-    // Prevents the spaceship from going through the surface
-    if (spaceshipY >= 450) {
-      spaceshipY = 450;
-      velocityY = 0;
-    }
-
     //Draws the spaceship with the given parameters
     spaceship(spaceshipX, spaceshipY, boostrFiring);
 
@@ -143,6 +137,7 @@ function draw() {
         crash = false;
         gameState = "end";
       }
+      velocityY = 0;
     }
   } else if (gameState === "end") {
     // Draw the spaceship on the end screen
@@ -165,6 +160,7 @@ function draw() {
     textAlign(CENTER, CENTER);
     text(endMessage, 380, 300);
   }
+  console.log(velocityY);
 }
 
 function keyPressed() {
