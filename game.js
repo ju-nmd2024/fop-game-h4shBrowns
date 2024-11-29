@@ -145,11 +145,6 @@ function draw() {
       }
     }
   } else if (gameState === "end") {
-    fill("white");
-    textSize(32);
-    textAlign(CENTER, CENTER);
-    text(endMessage, width / 2, height / 2);
-
     // Draw the spaceship on the end screen
     if (crash) {
       // Draw spaceship with explosion if crashed
@@ -165,6 +160,10 @@ function draw() {
       rect(0, 490, 800, 400);
       spaceship(spaceshipX, 450, false); // Draw spaceship on surface
     }
+    fill("white");
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    text(endMessage, 380, 300);
   }
 }
 
